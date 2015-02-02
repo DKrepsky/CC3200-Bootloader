@@ -25,24 +25,14 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>bootfile.c</name>
+			<name>boot.c</name>
 			<type>1</type>
-			<location>/opt/cc3200/CC3200-Akenge-Lib/source/bootloader/bootfile.c</location>
-		</link>
-		<link>
-			<name>bootfile.h</name>
-			<type>1</type>
-			<locationURI>AKLIB/include/bootloader/bootfile.h</locationURI>
+			<locationURI>AKLIB/source/boot/boot.c</locationURI>
 		</link>
 		<link>
 			<name>nano_print.c</name>
 			<type>1</type>
 			<locationURI>AKLIB/source/nano/nano_print.c</locationURI>
-		</link>
-		<link>
-			<name>nano_print.h</name>
-			<type>1</type>
-			<locationURI>AKLIB/include/nano/nano_print.h</locationURI>
 		</link>
 	</linkedResources>
 	<variableList>

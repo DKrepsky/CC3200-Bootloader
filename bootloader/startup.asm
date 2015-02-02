@@ -41,6 +41,11 @@
  */
 .extern main
 
+/*
+ * External BOOTRun function.
+ */
+.extern  BOOTRun
+
 /*!
  *  \def INITIAL_POS 0x20004000
  *
@@ -120,25 +125,6 @@ reloc:
     str        r1, [r0, #4]
 
     // Run the relocated main.
-    b        Run
+    b          BOOTRun
 
-/*!
- *  \fn void Run (uint32_t BaseAddr)
- *
- *  \brief Run an binary image from another location.
- *
- *  This function will use the interrupt vector of the application that will
- *  run to set the Stack Pointer Register (SP) and to find out the application
- *  entry point.
- *
- *   \param[in] BaseAddr The application base address in the SRAM.
- */
-Run: .global  Run
-    // Load SP.
-    ldr        r1, [r0]
-    mov        sp, r1
-
-    // Jump to ResetISR.
-    ldr        r2, [r0, #4]
-    bx        r2
 .end

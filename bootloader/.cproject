@@ -56,8 +56,8 @@
 									<listOptionValue builtIn="false" value="&quot;${SDK}/include/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SDK}/include/driverlib&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SDK}/include/simplelink&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${AKLIB}/include/bootloader&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${AKLIB}/include/nano&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${AKLIB}/include/boot&quot;"/>
 								</option>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.defs.68063976" name="Defined symbols (-D)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.defs" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="gcc"/>
@@ -74,8 +74,8 @@
 									<listOptionValue builtIn="false" value="&quot;${SDK}/include/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SDK}/include/driverlib&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SDK}/include/simplelink&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${AKLIB}/include/bootloader&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${AKLIB}/include/nano&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${AKLIB}/include/boot&quot;"/>
 								</option>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.defs.1031202798" name="Defined symbols (-D)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.defs" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="gcc"/>
@@ -158,5 +158,8 @@
 		</configuration>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings">
+		<doc-comment-owner id="org.eclipse.cdt.ui.doxygen">
+			<path value=""/>
+		</doc-comment-owner>
 	</storageModule>
 </cproject>

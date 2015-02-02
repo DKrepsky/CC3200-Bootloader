@@ -23,17 +23,17 @@
  */
 
 /*!
- *  \file
+ *  \file main.c
  *
- *  \brief Startup file for the bootloader.
+ *  \brief Bootloader.
  *
- *  This file contains the interrupt vector table, the function to relocate the
- *  bootloader in the SRAM and the function to run and image from another
- *  position in memory.
+ *  This is the Akenge bootloader, used to boot an custom image and do a roll
+ *  back when needed.
  *
- *  Version: 1.0.0
- *
- *  Author: David Krepsky
+ * \author David Krepsky
+ * \version	1.0.1
+ * \date 01/2015
+ * \copyright Akenge Engenharia
  */
 
 #include <stdint.h>
@@ -47,13 +47,10 @@
 #include "simplelink.h"
 
 #include "nano_print.h"
-#include "bootfile.h"
+#include "boot.h"
 
 // Interrupt Vector from startup.asm.
 extern void* intVector;
-
-// Run function from startup.asm.
-extern void Run(int32_t BaseAddr);
 
 /*!
  *  \fn int main (void)
@@ -71,7 +68,7 @@ int main() {
 	MAP_IntVTableBaseSet((int32_t) &intVector);
 	PRCMCC3200MCUInit();
 
-	// Initializes the NANOPint with a baud rate of 115200.
+	// Initializes the NANOPrint with a baud rate of 115200.
 	NANOPrintInit(115200);
 
 	// Print header.
@@ -86,7 +83,7 @@ int main() {
 
 	NANOPrint("OK\n\r");
 
-	// Check if boot config exists.
+	// Check if boot configuration exists.
 	if (!BOOTExistCfg()) {
 
 		NANOPrint("- boot.cfg not found, creating new...");
@@ -174,7 +171,7 @@ int main() {
 	NANOPrintClose();
 
 	// Run loaded image.
-	Run(BASE_ADDR);
+	BOOTRun((void*)BASE_ADDR);
 
 	// Should never reach here. If so, reset soc
 	PRCMSOCReset();
