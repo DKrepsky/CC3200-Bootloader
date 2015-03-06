@@ -31,7 +31,7 @@
  *  back when needed.
  *
  * \author David Krepsky
- * \version	1.0.1
+ * \version	1.0.2
  * \date 01/2015
  * \copyright Akenge Engenharia
  */
@@ -40,14 +40,15 @@
 
 #include "hw_types.h"
 #include "hw_memmap.h"
-#include "rom.h"
-#include "rom_map.h"
 #include "interrupt.h"
 #include "prcm.h"
 #include "simplelink.h"
 
 #include "nano_print.h"
 #include "boot.h"
+
+#include "rom.h"
+#include "rom_map.h"
 
 // Interrupt Vector from startup.asm.
 extern void* intVector;
@@ -72,21 +73,24 @@ int main() {
 	NANOPrintInit(115200);
 
 	// Print header.
-	NANOPrint("--------------------------------------------------------\n\r");
-	NANOPrint("------------------ Akenge  Bootloader ------------------\n\r");
-	NANOPrint("--------------------------------------------------------\n\r");
-	NANOPrint("\n\r");
-	NANOPrint("- Initializing Simplelink...");
+	NANOPrint("--------------------------------------------------------\r\n");
+	NANOPrint("------------------ Akenge  Bootloader ------------------\r\n");
+	NANOPrint("--------------------------------------------------------\r\n");
+	NANOPrint("\r\n");
+	NANOPrint("- Initializing Simplelink ...");
 
 	// Start NWP to get access to flash.
-	sl_Start(NULL, NULL, NULL);
+	if (0 > sl_Start(NULL, NULL, NULL)) {
+		NANOPrint("FAIL\r\n");
+		PRCMSOCReset();
+	}
 
-	NANOPrint("OK\n\r");
+	NANOPrint("OK\r\n");
 
 	// Check if boot configuration exists.
 	if (!BOOTExistCfg()) {
 
-		NANOPrint("- boot.cfg not found, creating new...");
+		NANOPrint("- boot.cfg not found, creating new ...");
 
 		// If it doesn't exist, create the file to boot from factory.bin.
 		bootinfo.bootimg = IMG_FACTORY;
@@ -94,18 +98,22 @@ int main() {
 		RetVal = BOOTWriteCfg(&bootinfo);
 
 		// Failed to create file, Reset SOC.
-		if (0 != RetVal)
+		if (0 != RetVal) {
+			NANOPrint("FAIL\r\n");
 			PRCMSOCReset();
-		NANOPrint("OK\n\r");
+		}
+		NANOPrint("OK\r\n");
 	}
 
-	NANOPrint("- Loading boot config...");
+	NANOPrint("- Loading boot config ...");
 
 	// Read configuration.
 	RetVal = BOOTReadCfg(&bootinfo);
-	if (0 != RetVal)
+	if (0 != RetVal) {
+		NANOPrint("FAIL\r\n");
 		PRCMSOCReset();
-	NANOPrint("OK\n\r");
+	}
+	NANOPrint("OK\r\n");
 
 	NANOPrint("- Boot status: ");
 
@@ -114,13 +122,13 @@ int main() {
 
 	// Last Boot OK.
 	case BOOT_OK:
-		NANOPrint("BOOT_OK\n\r");
+		NANOPrint("BOOT_OK\r\n");
 		BOOTLoadImg(bootinfo.bootimg);
 		break;
 
 		// New Firmware Available.
 	case BOOT_CHECK:
-		NANOPrint("BOOT_CHECK\n\r");
+		NANOPrint("BOOT_CHECK\r\n");
 		bootinfo.status = BOOT_CHECKING;
 
 		if (0 != BOOTWriteCfg(&bootinfo))
@@ -133,7 +141,7 @@ int main() {
 		// Something wrong during last boot, go back to factory image.
 	case BOOT_CHECKING:
 	case BOOT_ERR:
-		NANOPrint("BOOT_ERR\n\r");
+		NANOPrint("BOOT_ERR\r\n");
 		bootinfo.bootimg = IMG_FACTORY;
 		bootinfo.status = BOOT_OK;
 
@@ -146,7 +154,7 @@ int main() {
 
 		// Unknow status (corrupted file maybe?).
 	default:
-		NANOPrint("BOOT_UNKNOWN\n\r");
+		NANOPrint("BOOT_UNKNOWN\r\n");
 		BOOTDeleteCfg();
 		PRCMSOCReset();
 		break;
@@ -157,21 +165,21 @@ int main() {
 	// Stop NWP.
 	sl_Stop(0);
 
-	NANOPrint("OK\n\r");
+	NANOPrint("OK\r\n");
 
 	// Print the selected image.
 	NANOPrint("Running ");
 
 	if (bootinfo.bootimg == IMG_FACTORY)
-		NANOPrint("Factory Image\n\r");
+		NANOPrint("Factory Image\r\n");
 	else
-		NANOPrint("Custom Image\n\r");
+		NANOPrint("Custom Image\r\n");
 
 	// Turn-off the UART module.
 	NANOPrintClose();
 
 	// Run loaded image.
-	BOOTRun((void*)BASE_ADDR);
+	BOOTRun((void*) BASE_ADDR);
 
 	// Should never reach here. If so, reset soc
 	PRCMSOCReset();

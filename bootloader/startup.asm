@@ -31,7 +31,7 @@
  *  bootloader in the SRAM and the function to run and image from another
  *  position in memory.
  *
- *  Version: 1.0.0
+ *  Version: 1.0.2
  *
  *  Author: David Krepsky
  */
@@ -81,7 +81,7 @@ intVector: .global intVector
      *  Entry point is the relocator function (added of 0x4000 because of the
      * initial load position).
      */
-    .word   Relocator+0x4000
+    .word   Relocator+0x4001
 
 
 .text
