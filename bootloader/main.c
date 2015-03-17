@@ -31,12 +31,14 @@
  *  back when needed.
  *
  * \author David Krepsky
- * \version	1.0.2
+ * \version	1.0.3
  * \date 01/2015
  * \copyright Akenge Engenharia
  */
 
 #include <stdint.h>
+
+#include "unused.h"
 
 #include "hw_types.h"
 #include "hw_memmap.h"
@@ -44,11 +46,11 @@
 #include "prcm.h"
 #include "simplelink.h"
 
-#include "nano_print.h"
 #include "boot.h"
 
 #include "rom.h"
 #include "rom_map.h"
+#include "print.h"
 
 // Interrupt Vector from startup.asm.
 extern void* intVector;
@@ -69,28 +71,28 @@ int main() {
 	MAP_IntVTableBaseSet((int32_t) &intVector);
 	PRCMCC3200MCUInit();
 
-	// Initializes the NANOPrint with a baud rate of 115200.
-	NANOPrintInit(115200);
+	// Initializes the PRINT with a baud rate of 115200.
+	PRINTInit(115200);
 
 	// Print header.
-	NANOPrint("--------------------------------------------------------\r\n");
-	NANOPrint("------------------ Akenge  Bootloader ------------------\r\n");
-	NANOPrint("--------------------------------------------------------\r\n");
-	NANOPrint("\r\n");
-	NANOPrint("- Initializing Simplelink ...");
+	PRINT("--------------------------------------------------------\r\n");
+	PRINT("------------------ Akenge  Bootloader ------------------\r\n");
+	PRINT("--------------------------------------------------------\r\n");
+	PRINT("\r\n");
+	PRINT("- Initializing Simplelink ...");
 
 	// Start NWP to get access to flash.
 	if (0 > sl_Start(NULL, NULL, NULL)) {
-		NANOPrint("FAIL\r\n");
+		PRINT("FAIL\r\n");
 		PRCMSOCReset();
 	}
 
-	NANOPrint("OK\r\n");
+	PRINT("OK\r\n");
 
 	// Check if boot configuration exists.
 	if (!BOOTExistCfg()) {
 
-		NANOPrint("- boot.cfg not found, creating new ...");
+		PRINT("- boot.cfg not found, creating new ...");
 
 		// If it doesn't exist, create the file to boot from factory.bin.
 		bootinfo.bootimg = IMG_FACTORY;
@@ -99,36 +101,36 @@ int main() {
 
 		// Failed to create file, Reset SOC.
 		if (0 != RetVal) {
-			NANOPrint("FAIL\r\n");
+			PRINT("FAIL\r\n");
 			PRCMSOCReset();
 		}
-		NANOPrint("OK\r\n");
+		PRINT("OK\r\n");
 	}
 
-	NANOPrint("- Loading boot config ...");
+	PRINT("- Loading boot config ...");
 
 	// Read configuration.
 	RetVal = BOOTReadCfg(&bootinfo);
 	if (0 != RetVal) {
-		NANOPrint("FAIL\r\n");
+		PRINT("FAIL\r\n");
 		PRCMSOCReset();
 	}
-	NANOPrint("OK\r\n");
+	PRINT("OK\r\n");
 
-	NANOPrint("- Boot status: ");
+	PRINT("- Boot status: ");
 
 	// Check boot status.
 	switch (bootinfo.status) {
 
 	// Last Boot OK.
 	case BOOT_OK:
-		NANOPrint("BOOT_OK\r\n");
+		PRINT("BOOT_OK\r\n");
 		BOOTLoadImg(bootinfo.bootimg);
 		break;
 
 		// New Firmware Available.
 	case BOOT_CHECK:
-		NANOPrint("BOOT_CHECK\r\n");
+		PRINT("BOOT_CHECK\r\n");
 		bootinfo.status = BOOT_CHECKING;
 
 		if (0 != BOOTWriteCfg(&bootinfo))
@@ -141,7 +143,7 @@ int main() {
 		// Something wrong during last boot, go back to factory image.
 	case BOOT_CHECKING:
 	case BOOT_ERR:
-		NANOPrint("BOOT_ERR\r\n");
+		PRINT("BOOT_ERR\r\n");
 		bootinfo.bootimg = IMG_FACTORY;
 		bootinfo.status = BOOT_OK;
 
@@ -154,29 +156,29 @@ int main() {
 
 		// Unknow status (corrupted file maybe?).
 	default:
-		NANOPrint("BOOT_UNKNOWN\r\n");
+		PRINT("BOOT_UNKNOWN\r\n");
 		BOOTDeleteCfg();
 		PRCMSOCReset();
 		break;
 	}
 
-	NANOPrint("- Stop NWP...");
+	PRINT("- Stop NWP...");
 
 	// Stop NWP.
 	sl_Stop(0);
 
-	NANOPrint("OK\r\n");
+	PRINT("OK\r\n");
 
 	// Print the selected image.
-	NANOPrint("Running ");
+	PRINT("Running ");
 
 	if (bootinfo.bootimg == IMG_FACTORY)
-		NANOPrint("Factory Image\r\n");
+		PRINT("Factory Image\r\n");
 	else
-		NANOPrint("Custom Image\r\n");
+		PRINT("Custom Image\r\n");
 
 	// Turn-off the UART module.
-	NANOPrintClose();
+	PRINTClose();
 
 	// Run loaded image.
 	BOOTRun((void*) BASE_ADDR);
@@ -190,15 +192,20 @@ int main() {
 // Simplelink Hooks, not used by the bootloader but required by the simplelink.
 void SimpleLinkWlanEventHandler(SlWlanEvent_t *pWlanEvent) {
 
+	UNUSED(pWlanEvent);
 }
 
 void SimpleLinkHttpServerCallback(SlHttpServerEvent_t *pHttpEvent,
 		SlHttpServerResponse_t *pHttpResponse) {
 
+	UNUSED(pHttpEvent);
+	UNUSED(pHttpResponse);
 }
 void SimpleLinkNetAppEventHandler(SlNetAppEvent_t *pNetAppEvent) {
 
+	UNUSED(pNetAppEvent);
 }
 void SimpleLinkSockEventHandler(SlSockEvent_t *pSock) {
 
+	UNUSED(pSock);
 }

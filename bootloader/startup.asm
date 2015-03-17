@@ -36,16 +36,6 @@
  *  Author: David Krepsky
  */
 
-/*
- *  Bootloader external main function.
- */
-.extern main
-
-/*
- * External BOOTRun function.
- */
-.extern  BOOTRun
-
 /*!
  *  \def INITIAL_POS 0x20004000
  *
@@ -64,6 +54,16 @@
  *  Position of the bootloader after the relocation process.
  */
 .set    RELOCATED_POS,    0x20000000
+
+/*
+ *  Bootloader external main function.
+ */
+.extern main
+
+/*
+ * External BOOTRun function.
+ */
+.extern  BOOTRun
 
 /*!
  *  \brief Interrupt vector

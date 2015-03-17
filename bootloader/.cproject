@@ -4,7 +4,6 @@
 		<cconfiguration id="ilg.gnuarmeclipse.managedbuild.cross.config.elf.release.893125307">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="ilg.gnuarmeclipse.managedbuild.cross.config.elf.release.893125307" moduleId="org.eclipse.cdt.core.settings" name="Release">
 				<macros>
-					<stringMacro name="AKLIB" type="VALUE_TEXT" value="/opt/cc3200/CC3200-Akenge-Lib"/>
 					<stringMacro name="SDK" type="VALUE_TEXT" value="/opt/cc3200/CC3200-Linux-SDK"/>
 				</macros>
 				<externalSettings/>
@@ -48,6 +47,9 @@
 							<option id="ilg.gnuarmeclipse.managedbuild.cross.option.warnings.allwarn.440518904" name="Enable all common warnings (-Wall)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.warnings.allwarn" value="true" valueType="boolean"/>
 							<option id="ilg.gnuarmeclipse.managedbuild.cross.option.arm.target.thumbinterwork.917908041" name="Thumb interwork (-mthumb-interwork)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.arm.target.thumbinterwork" value="false" valueType="boolean"/>
 							<option id="ilg.gnuarmeclipse.managedbuild.cross.option.optimization.PIC.1337114298" name="Position independent code (-fPIC)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.optimization.PIC" value="false" valueType="boolean"/>
+							<option id="ilg.gnuarmeclipse.managedbuild.cross.option.warnings.uninitialized.1175056431" name="Warn on uninitialized variables (-Wuninitialised)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.warnings.uninitialized" value="false" valueType="boolean"/>
+							<option id="ilg.gnuarmeclipse.managedbuild.cross.option.warnings.unused.334432755" name="Warn on various unused elements (-Wunused)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.warnings.unused" value="false" valueType="boolean"/>
+							<option id="ilg.gnuarmeclipse.managedbuild.cross.option.warnings.extrawarn.2093384453" name="Enable extra warnings (-Wextra)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.warnings.extrawarn" value="true" valueType="boolean"/>
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="ilg.gnuarmeclipse.managedbuild.cross.targetPlatform.1412260503" isAbstract="false" osList="all" superClass="ilg.gnuarmeclipse.managedbuild.cross.targetPlatform"/>
 							<builder buildPath="${workspace_loc:/Bootloader}/Release" id="ilg.gnuarmeclipse.managedbuild.cross.builder.164523645" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="ilg.gnuarmeclipse.managedbuild.cross.builder"/>
 							<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler.775818095" name="Cross ARM GNU Assembler" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler">
@@ -56,8 +58,9 @@
 									<listOptionValue builtIn="false" value="&quot;${SDK}/include/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SDK}/include/driverlib&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SDK}/include/simplelink&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${AKLIB}/include/nano&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${AKLIB}/include/boot&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Bootloader/boot}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Bootloader/print}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Bootloader}&quot;"/>
 								</option>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.defs.68063976" name="Defined symbols (-D)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.defs" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="gcc"/>
@@ -72,8 +75,9 @@
 									<listOptionValue builtIn="false" value="&quot;${SDK}/include/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SDK}/include/driverlib&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SDK}/include/simplelink&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${AKLIB}/include/nano&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${AKLIB}/include/boot&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Bootloader/boot}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Bootloader/print}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Bootloader}&quot;"/>
 								</option>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.defs.1031202798" name="Defined symbols (-D)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.defs" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="gcc"/>

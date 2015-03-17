@@ -23,23 +23,7 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>boot.c</name>
-			<type>1</type>
-			<locationURI>AKLIB/source/boot/boot.c</locationURI>
-		</link>
-		<link>
-			<name>nano_print.c</name>
-			<type>1</type>
-			<locationURI>AKLIB/source/nano/nano_print.c</locationURI>
-		</link>
-	</linkedResources>
 	<variableList>
-		<variable>
-			<name>AKLIB</name>
-			<value>file:/opt/cc3200/CC3200-Akenge-Lib</value>
-		</variable>
 		<variable>
 			<name>SDK</name>
 			<value>file:/opt/cc3200/CC3200-Linux-SDK</value>
