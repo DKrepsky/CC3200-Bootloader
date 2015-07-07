@@ -31,8 +31,8 @@
  *  back when needed.
  *
  * \author David Krepsky
- * \version	1.0.3
- * \date 01/2015
+ * \version	1.0.4
+ * \date 07/2015
  * \copyright Akenge Engenharia
  */
 
@@ -64,148 +64,148 @@ extern void* intVector;
  *  the adequate image to run. It then runs the appropriate image.
  */
 int main() {
-	int32_t RetVal; // Used to check return values.
-	bootinfo_t bootinfo; // Bootinfo structure.
+  int32_t RetVal; // Used to check return values.
+  bootinfo_t bootinfo; // Bootinfo structure.
 
-	// Initializes the board.
-	MAP_IntVTableBaseSet((int32_t) &intVector);
-	PRCMCC3200MCUInit();
+  // Initializes the board.
+  MAP_IntVTableBaseSet((int32_t) &intVector);
+  PRCMCC3200MCUInit();
 
-	// Initializes the PRINT with a baud rate of 115200.
-	PRINTInit(115200);
+  // Initializes the PRINT with a baud rate of 115200.
+  PRINTInit(115200);
 
-	// Print header.
-	PRINT("--------------------------------------------------------\r\n");
-	PRINT("------------------ Akenge  Bootloader ------------------\r\n");
-	PRINT("--------------------------------------------------------\r\n");
-	PRINT("\r\n");
-	PRINT("- Initializing Simplelink ...");
+  // Print header.
+  PRINT("--------------------------------------------------------\r\n");
+  PRINT("------------------ Akenge  Bootloader ------------------\r\n");
+  PRINT("--------------------------------------------------------\r\n");
+  PRINT("\r\n");
+  PRINT("- Initializing Simplelink ...");
 
-	// Start NWP to get access to flash.
-	if (0 > sl_Start(NULL, NULL, NULL)) {
-		PRINT("FAIL\r\n");
-		PRCMSOCReset();
-	}
+  // Start NWP to get access to flash.
+  if (0 > sl_Start(NULL, NULL, NULL)) {
+    PRINT("FAIL\r\n");
+    PRCMSOCReset();
+  }
 
-	PRINT("OK\r\n");
+  PRINT("OK\r\n");
 
-	// Check if boot configuration exists.
-	if (!BOOTExistCfg()) {
+  // Check if boot configuration exists.
+  if (!BOOTExistCfg()) {
 
-		PRINT("- boot.cfg not found, creating new ...");
+    PRINT("- boot.cfg not found, creating new ...");
 
-		// If it doesn't exist, create the file to boot from factory.bin.
-		bootinfo.bootimg = IMG_FACTORY;
-		bootinfo.status = BOOT_OK;
-		RetVal = BOOTWriteCfg(&bootinfo);
+    // If it doesn't exist, create the file to boot from factory.bin.
+    bootinfo.bootimg = IMG_FACTORY;
+    bootinfo.status = BOOT_OK;
+    RetVal = BOOTWriteCfg(&bootinfo);
 
-		// Failed to create file, Reset SOC.
-		if (0 != RetVal) {
-			PRINT("FAIL\r\n");
-			PRCMSOCReset();
-		}
-		PRINT("OK\r\n");
-	}
+    // Failed to create file, Reset SOC.
+    if (0 != RetVal) {
+      PRINT("FAIL\r\n");
+      PRCMSOCReset();
+    }
+    PRINT("OK\r\n");
+  }
 
-	PRINT("- Loading boot config ...");
+  PRINT("- Loading boot config ...");
 
-	// Read configuration.
-	RetVal = BOOTReadCfg(&bootinfo);
-	if (0 != RetVal) {
-		PRINT("FAIL\r\n");
-		PRCMSOCReset();
-	}
-	PRINT("OK\r\n");
+  // Read configuration.
+  RetVal = BOOTReadCfg(&bootinfo);
+  if (0 != RetVal) {
+    PRINT("FAIL\r\n");
+    PRCMSOCReset();
+  }
+  PRINT("OK\r\n");
 
-	PRINT("- Boot status: ");
+  PRINT("- Boot status: ");
 
-	// Check boot status.
-	switch (bootinfo.status) {
+  // Check boot status.
+  switch (bootinfo.status) {
 
-	// Last Boot OK.
-	case BOOT_OK:
-		PRINT("BOOT_OK\r\n");
-		BOOTLoadImg(bootinfo.bootimg);
-		break;
+  // Last Boot OK.
+  case BOOT_OK:
+    PRINT("BOOT_OK\r\n");
+    BOOTLoadImg(bootinfo.bootimg);
+    break;
 
-		// New Firmware Available.
-	case BOOT_CHECK:
-		PRINT("BOOT_CHECK\r\n");
-		bootinfo.status = BOOT_CHECKING;
+    // New Firmware Available.
+  case BOOT_CHECK:
+    PRINT("BOOT_CHECK\r\n");
+    bootinfo.status = BOOT_CHECKING;
 
-		if (0 != BOOTWriteCfg(&bootinfo))
-			PRCMSOCReset();
+    if (0 != BOOTWriteCfg(&bootinfo))
+      PRCMSOCReset();
 
-		if (0 != BOOTLoadImg(IMG_CUSTOM))
-			PRCMSOCReset();
-		break;
+    if (0 != BOOTLoadImg(IMG_CUSTOM))
+      PRCMSOCReset();
+    break;
 
-		// Something wrong during last boot, go back to factory image.
-	case BOOT_CHECKING:
-	case BOOT_ERR:
-		PRINT("BOOT_ERR\r\n");
-		bootinfo.bootimg = IMG_FACTORY;
-		bootinfo.status = BOOT_OK;
+    // Something wrong during last boot, go back to factory image.
+  case BOOT_CHECKING:
+  case BOOT_ERR:
+    PRINT("BOOT_ERR\r\n");
+    bootinfo.bootimg = IMG_FACTORY;
+    bootinfo.status = BOOT_OK;
 
-		if (0 != BOOTWriteCfg(&bootinfo))
-			PRCMSOCReset();
+    if (0 != BOOTWriteCfg(&bootinfo))
+      PRCMSOCReset();
 
-		if (0 != BOOTLoadImg(IMG_FACTORY))
-			PRCMSOCReset();
-		break;
+    if (0 != BOOTLoadImg(IMG_FACTORY))
+      PRCMSOCReset();
+    break;
 
-		// Unknow status (corrupted file maybe?).
-	default:
-		PRINT("BOOT_UNKNOWN\r\n");
-		BOOTDeleteCfg();
-		PRCMSOCReset();
-		break;
-	}
+    // Unknow status (corrupted file maybe?).
+  default:
+    PRINT("BOOT_UNKNOWN\r\n");
+    BOOTDeleteCfg();
+    PRCMSOCReset();
+    break;
+  }
 
-	PRINT("- Stop NWP...");
+  PRINT("- Stop NWP...");
 
-	// Stop NWP.
-	sl_Stop(0);
+  // Stop NWP.
+  sl_Stop(0);
 
-	PRINT("OK\r\n");
+  PRINT("OK\r\n");
 
-	// Print the selected image.
-	PRINT("Running ");
+  // Print the selected image.
+  PRINT("Running ");
 
-	if (bootinfo.bootimg == IMG_FACTORY)
-		PRINT("Factory Image\r\n");
-	else
-		PRINT("Custom Image\r\n");
+  if (bootinfo.bootimg == IMG_FACTORY)
+    PRINT("Factory Image\r\n");
+  else
+    PRINT("Custom Image\r\n");
 
-	// Turn-off the UART module.
-	PRINTClose();
+  // Turn-off the UART module.
+  PRINTClose();
 
-	// Run loaded image.
-	BOOTRun((void*) BASE_ADDR);
+  // Run loaded image.
+  BOOTRun((void*) BASE_ADDR);
 
-	// Should never reach here. If so, reset soc
-	PRCMSOCReset();
+  // Should never reach here. If so, reset soc
+  PRCMSOCReset();
 
-	return -1;
+  return -1;
 }
 
 // Simplelink Hooks, not used by the bootloader but required by the simplelink.
 void SimpleLinkWlanEventHandler(SlWlanEvent_t *pWlanEvent) {
 
-	UNUSED(pWlanEvent);
+  UNUSED(pWlanEvent);
 }
 
 void SimpleLinkHttpServerCallback(SlHttpServerEvent_t *pHttpEvent,
-		SlHttpServerResponse_t *pHttpResponse) {
+    SlHttpServerResponse_t *pHttpResponse) {
 
-	UNUSED(pHttpEvent);
-	UNUSED(pHttpResponse);
+  UNUSED(pHttpEvent);
+  UNUSED(pHttpResponse);
 }
 void SimpleLinkNetAppEventHandler(SlNetAppEvent_t *pNetAppEvent) {
 
-	UNUSED(pNetAppEvent);
+  UNUSED(pNetAppEvent);
 }
 void SimpleLinkSockEventHandler(SlSockEvent_t *pSock) {
 
-	UNUSED(pSock);
+  UNUSED(pSock);
 }

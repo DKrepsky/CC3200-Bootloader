@@ -55,16 +55,17 @@
 							<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler.775818095" name="Cross ARM GNU Assembler" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler">
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.usepreprocessor.279631973" name="Use preprocessor" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.usepreprocessor" value="true" valueType="boolean"/>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.include.paths.2079518929" name="Include paths (-I)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${SDK}/include/inc&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SDK}/include/driverlib&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SDK}/include/simplelink&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Bootloader/boot}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Bootloader/print}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Bootloader}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}/src/inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}/src/driverlib&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}/src/simplelink/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}/src/simplelink&quot;"/>
 								</option>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.defs.68063976" name="Defined symbols (-D)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.defs" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="gcc"/>
-									<listOptionValue builtIn="false" value="SL_TINY"/>
+									<listOptionValue builtIn="false" value="SL_FULL"/>
 								</option>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.asmlisting.1266999937" name="Generate assembler listing (-Wa,-adhlns=&quot;$@.lst&quot;)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.asmlisting" value="false" valueType="boolean"/>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.include.files.351713159" name="Include files (-include)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.include.files"/>
@@ -72,16 +73,17 @@
 							</tool>
 							<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.2109041496" name="Cross ARM C Compiler" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler">
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.include.paths.137869598" name="Include paths (-I)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.include.paths" useByScannerDiscovery="false" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${SDK}/include/inc&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SDK}/include/driverlib&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SDK}/include/simplelink&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Bootloader/boot}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Bootloader/print}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Bootloader}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}/src/inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}/src/driverlib&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}/src/simplelink/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK}/src/simplelink&quot;"/>
 								</option>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.defs.1031202798" name="Defined symbols (-D)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.defs" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="gcc"/>
-									<listOptionValue builtIn="false" value="SL_TINY"/>
+									<listOptionValue builtIn="false" value="SL_FULL"/>
 								</option>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.std.2022390079" name="Language standard" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.std" useByScannerDiscovery="true" value="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.std.c99" valueType="enumerated"/>
 								<inputType id="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.input.1256957597" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.input"/>
@@ -93,8 +95,8 @@
 									<listOptionValue builtIn="false" value="&quot;${SDK}/lib&quot;"/>
 								</option>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.linker.libs.1298884785" name="Libraries (-l)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.linker.libs" valueType="libs">
-									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="simplelink_nonos_tiny"/>
 									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="driver"/>
+									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="simplelink_nonos"/>
 								</option>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.linker.scriptfile.1101469090" name="Script files (-T)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.linker.scriptfile" valueType="stringList">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/bootloader.ld}&quot;"/>

@@ -1,6 +1,9 @@
 /*!
  * 	\page Changelog Changelog
  *
+ *	### 1.0.4 - 07/07/2015
+ *	- Updated project to work with SDK v 1.0.1.
+ *
  *	### 1.0.3 - 17/03/2015
  *
  *	- Bootloaders does not need Akenge lib anymore.

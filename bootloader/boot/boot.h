@@ -108,17 +108,16 @@
  *	\brief Status of the current boot.
  */
 typedef enum {
-	/*! Last boot was ok, boot the same image. */
-	BOOT_OK,
-	/*! New firmware available, boot custom.bin. */
-	BOOT_CHECK,
-	/*! If the bootloader finds this, something went wrong during firmware
-	 *  check. */
-	BOOT_CHECKING,
-	/*! Error in custom.bin, load factory image. */
-	BOOT_ERR
+  /*! Last boot was ok, boot the same image. */
+  BOOT_OK,
+  /*! New firmware available, boot custom.bin. */
+  BOOT_CHECK,
+  /*! If the bootloader finds this, something went wrong during firmware
+   *  check. */
+  BOOT_CHECKING,
+  /*! Error in custom.bin, load factory image. */
+  BOOT_ERR
 } bootstatus_t;
-
 
 /*!
  *	\enum imgtype_t
@@ -126,10 +125,10 @@ typedef enum {
  *	\brief Indicates the image type (factory or custom).
  */
 typedef enum {
-	/*! Factory image in file /sys/factory.bin. */
-	IMG_FACTORY,
-	/*! Custom image in file /sys/custom.bin. */
-	IMG_CUSTOM
+  /*! Factory image in file /sys/factory.bin. */
+  IMG_FACTORY,
+  /*! Custom image in file /sys/custom.bin. */
+  IMG_CUSTOM
 } imgtype_t;
 
 /*!
@@ -138,10 +137,10 @@ typedef enum {
  *	\brief Structure used in the boot.cfg file.
  */
 typedef struct {
-	/*! Status of the current boot. */
-	bootstatus_t status;
-	/*! Type of the image to boot. */
-	imgtype_t bootimg;
+  /*! Status of the current boot. */
+  bootstatus_t status;
+  /*! Type of the image to boot. */
+  imgtype_t bootimg;
 } bootinfo_t;
 
 /*!

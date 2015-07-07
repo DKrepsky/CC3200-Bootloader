@@ -55,19 +55,19 @@
  */
 void PRINTInit(uint32_t baud) {
 
-	/* Enable UARTA.0 */
-	MAP_PRCMPeripheralClkEnable(PRCM_UARTA0, PRCM_RUN_MODE_CLK);
+  /* Enable UARTA.0 */
+  MAP_PRCMPeripheralClkEnable(PRCM_UARTA0, PRCM_RUN_MODE_CLK);
 
-	/* Pin 55 as Tx. */
-	MAP_PinTypeUART(PIN_55, PIN_MODE_3);
+  /* Pin 55 as Tx. */
+  MAP_PinTypeUART(PIN_55, PIN_MODE_3);
 
-	/* Configure and enable UARTA0. */
-	MAP_UARTConfigSetExpClk(UARTA0_BASE,
-	MAP_PRCMPeripheralClockGet(PRCM_UARTA0), baud,
-			(UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE |
-			UART_CONFIG_PAR_NONE));
+  /* Configure and enable UARTA0. */
+  MAP_UARTConfigSetExpClk(UARTA0_BASE,
+  MAP_PRCMPeripheralClockGet(PRCM_UARTA0), baud,
+      (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE |
+      UART_CONFIG_PAR_NONE));
 
-	MAP_UARTFIFODisable(UARTA0_BASE);
+  MAP_UARTFIFODisable(UARTA0_BASE);
 }
 
 /*
@@ -75,10 +75,10 @@ void PRINTInit(uint32_t baud) {
  */
 void PRINT(char *str) {
 
-	/* Send char until '\0'. */
-	while (*str != '\0') {
-		UARTCharPut(UARTA0_BASE, *str++);
-	}
+  /* Send char until '\0'. */
+  while (*str != '\0') {
+    UARTCharPut(UARTA0_BASE, *str++);
+  }
 
 }
 
@@ -87,13 +87,14 @@ void PRINT(char *str) {
  */
 void PRINTClose() {
 
-	while(MAP_UARTBusy(UARTA0_BASE));
+  while (MAP_UARTBusy(UARTA0_BASE))
+    ;
 
-	/* Power down UARTA0. */
-	MAP_PRCMPeripheralClkDisable(PRCM_UARTA0, PRCM_RUN_MODE_CLK);
+  /* Power down UARTA0. */
+  MAP_PRCMPeripheralClkDisable(PRCM_UARTA0, PRCM_RUN_MODE_CLK);
 
-	/* Pin 55 as input. */
-	MAP_PinTypeGPIO(PIN_55, PIN_MODE_0, false);
+  /* Pin 55 as input. */
+  MAP_PinTypeGPIO(PIN_55, PIN_MODE_0, false);
 }
 
 /*!
