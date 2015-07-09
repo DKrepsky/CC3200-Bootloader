@@ -1,6 +1,10 @@
 /*!
  * 	\page Changelog Changelog
  *
+ *	### 1.0.5 - 07/07/2015
+ *	- Updated project to work with SDK v 1.0.2.
+ *	- Binary is now under release tab in github.
+ *
  *	### 1.0.4 - 07/07/2015
  *	- Updated project to work with SDK v 1.0.1.
  *

@@ -3,9 +3,10 @@
 *.d
 *.map
 *.mk
+*.db
 
 #eclipse
 .metadata/
 RemoteSystemsTempFiles/
-bootloader/Release/makefile
+bootloader/Release/
 
